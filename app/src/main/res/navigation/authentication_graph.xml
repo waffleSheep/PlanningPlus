@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/authentication_graph"
+    app:startDestination="@id/userSignInFragment">
+
+    <fragment
+        android:id="@+id/userSignInFragment"
+        android:name="com.example.planningplus.UserSignInFragment"
+        android:label="fragment_user_sign_in"
+        tools:layout="@layout/fragment_user_sign_in" >
+        <action
+            android:id="@+id/action_userSignInFragment_to_registrationPaneOneFragment"
+            app:destination="@id/registrationPaneOneFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationPaneOneFragment"
+        android:name="com.example.planningplus.RegistrationPaneOneFragment"
+        android:label="fragment_registration_pane_one"
+        tools:layout="@layout/fragment_registration_pane_one" >
+        <action
+            android:id="@+id/action_registrationPaneOneFragment_to_userSignInFragment"
+            app:destination="@id/userSignInFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+</navigation>
