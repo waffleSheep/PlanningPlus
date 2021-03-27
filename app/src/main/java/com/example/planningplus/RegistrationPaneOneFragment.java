@@ -156,5 +156,13 @@ public class RegistrationPaneOneFragment extends Fragment {
                 navController.navigate(R.id.action_registrationPaneOneFragment_to_userSignInFragment);
             }
         });
+
+        Button next = view.findViewById(R.id.next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_registrationPaneOneFragment_to_registrationPaneTwoFragment);
+            }
+        });
     }
 }

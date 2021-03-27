@@ -30,5 +30,24 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_registrationPaneOneFragment_to_registrationPaneTwoFragment"
+            app:destination="@id/registrationPaneTwoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationPaneTwoFragment"
+        android:name="com.example.planningplus.RegistrationPaneTwoFragment"
+        android:label="RegistrationPaneTwoFragment" >
+        <action
+            android:id="@+id/action_registrationPaneTwoFragment_to_registrationPaneOneFragment"
+            app:destination="@id/registrationPaneOneFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 </navigation>
