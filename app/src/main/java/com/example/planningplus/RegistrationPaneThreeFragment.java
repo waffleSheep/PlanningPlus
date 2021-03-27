@@ -22,10 +22,10 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RegistrationPaneTwoFragment#newInstance} factory method to
+ * Use the {@link RegistrationPaneThreeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationPaneTwoFragment extends Fragment {
+public class RegistrationPaneThreeFragment extends Fragment {
     private AuthenticationViewModel authenticationViewModel;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +35,7 @@ public class RegistrationPaneTwoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public RegistrationPaneTwoFragment() {
+    public RegistrationPaneThreeFragment() {
         // Required empty public constructor
     }
 
@@ -70,7 +70,7 @@ public class RegistrationPaneTwoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration_pane_two, container, false);
+        return inflater.inflate(R.layout.fragment_registration_pane_three, container, false);
     }
 
     @SuppressLint({"SetTextI18n", "SetJavaScriptEnabled"})
@@ -81,10 +81,10 @@ public class RegistrationPaneTwoFragment extends Fragment {
         NavController navController = Navigation.findNavController(view);
 
         TextView latitude = view.findViewById(R.id.textview2);
-        latitude.setText("Latitude: " + authenticationViewModel.homeAddressLatitude.getValue());
+        latitude.setText("Latitude: " + authenticationViewModel.workAddressLatitude.getValue());
 
         TextView longitude = view.findViewById(R.id.textview3);
-        longitude.setText("Longitude: " + authenticationViewModel.homeAddressLongitude.getValue());
+        longitude.setText("Longitude: " + authenticationViewModel.workAddressLongitude.getValue());
 
         WebView webView = view.findViewById(R.id.webView);
         webView.loadUrl("file:///android_asset/main.html");
@@ -92,10 +92,10 @@ public class RegistrationPaneTwoFragment extends Fragment {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 String[] coordinates = consoleMessage.message().split(",");
-                authenticationViewModel.homeAddressLatitude.setValue(Double.parseDouble(coordinates[0]));
-                authenticationViewModel.homeAddressLongitude.setValue(Double.parseDouble(coordinates[1]));
-                latitude.setText("Latitude: " + authenticationViewModel.homeAddressLatitude.getValue());
-                longitude.setText("Longitude: " + authenticationViewModel.homeAddressLongitude.getValue());
+                authenticationViewModel.workAddressLatitude.setValue(Double.parseDouble(coordinates[0]));
+                authenticationViewModel.workAddressLongitude.setValue(Double.parseDouble(coordinates[1]));
+                latitude.setText("Latitude: " + authenticationViewModel.workAddressLatitude.getValue());
+                longitude.setText("Longitude: " + authenticationViewModel.workAddressLongitude.getValue());
                 return super.onConsoleMessage(consoleMessage);
             }
         });
@@ -107,15 +107,7 @@ public class RegistrationPaneTwoFragment extends Fragment {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_registrationPaneTwoFragment_to_registrationPaneOneFragment);
-            }
-        });
-
-        Button next = view.findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_registrationPaneTwoFragment_to_registrationPaneThreeFragment);
+                navController.navigate(R.id.action_registrationPaneThreeFragment_to_registrationPaneTwoFragment);
             }
         });
     }
