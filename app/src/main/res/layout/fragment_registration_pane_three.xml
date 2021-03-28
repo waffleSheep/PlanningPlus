@@ -22,7 +22,8 @@
                 android:id="@+id/textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set Work Address"
+                android:text="Set Home Address"
+                android:paddingTop="5dp"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -30,7 +31,8 @@
                 android:id="@+id/textview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="Latitude:"
+                android:paddingTop="10dp"
                 android:textAlignment="textStart"
                 android:textSize="18sp" />
 
@@ -38,7 +40,8 @@
                 android:id="@+id/textview3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="Longitude:"
+                android:paddingBottom="10dp"
                 android:textAlignment="textStart"
                 android:textSize="18sp" />
 
@@ -50,7 +53,8 @@
                 <WebView
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:foreground="@drawable/black_border_webview_box" />
             </LinearLayout>
 
         </LinearLayout>
@@ -64,14 +68,15 @@
 
 
             <Button
-                android:id="@+id/next"
+                android:id="@+id/submit"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:layout_alignParentRight="true"
+                android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/previous"
-                android:layout_alignParentRight="true"
                 tools:layout_editor_absoluteY="721dp" />
 
             <Button
@@ -79,10 +84,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Previous"
-                app:layout_constraintEnd_toStartOf="@+id/next"
+                app:layout_constraintEnd_toStartOf="@+id/submit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_alignParentLeft="true"
+                style="?attr/materialButtonOutlinedStyle"
                 tools:layout_editor_absoluteY="721dp" />
 
         </RelativeLayout>

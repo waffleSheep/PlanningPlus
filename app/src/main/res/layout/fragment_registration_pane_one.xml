@@ -19,35 +19,52 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName2"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:hint="username"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="-2dp"
-                tools:layout_editor_absoluteY="263dp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <EditText
-                android:id="@+id/editTextTextPassword2"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="password"
-                android:inputType="textPassword"
-                tools:layout_editor_absoluteX="95dp"
-                tools:layout_editor_absoluteY="308dp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <EditText
-                android:id="@+id/editTextTextPassword3"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="confirm password"
-                android:inputType="textPassword"
-                tools:layout_editor_absoluteX="95dp"
-                tools:layout_editor_absoluteY="353dp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch1"
@@ -75,6 +92,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/previous"
                 android:layout_alignParentRight="true"
+                style="?attr/materialButtonOutlinedStyle"
                 tools:layout_editor_absoluteY="721dp" />
 
             <Button
@@ -86,6 +104,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_alignParentLeft="true"
+                style="?attr/materialButtonOutlinedStyle"
                 tools:layout_editor_absoluteY="721dp" />
 
         </RelativeLayout>

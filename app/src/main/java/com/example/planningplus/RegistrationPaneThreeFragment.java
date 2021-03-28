@@ -20,6 +20,12 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegistrationPaneThreeFragment#newInstance} factory method to
@@ -108,6 +114,32 @@ public class RegistrationPaneThreeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_registrationPaneThreeFragment_to_registrationPaneTwoFragment);
+            }
+        });
+
+        Button submit = view.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = new User(authenticationViewModel.username.getValue(),
+                        authenticationViewModel.password.getValue(),
+                        authenticationViewModel.homeAddressLatitude.getValue(),
+                        authenticationViewModel.homeAddressLongitude.getValue(),
+                        authenticationViewModel.workAddressLatitude.getValue(),
+                        authenticationViewModel.workAddressLongitude.getValue(),
+                        authenticationViewModel.isStudent.getValue());
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(authenticationViewModel.username.getValue()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        navController.navigate(R.id.action_registrationPaneThreeFragment_to_userSignInFragment);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar.make(view, "Internet error", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    }
+                });
             }
         });
     }

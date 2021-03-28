@@ -7,14 +7,14 @@ public class User {
     public Double homeAddressLatitude, homeAddressLongitude, workAddressLatitude, workAddressLongitude;
     public boolean isStudent;
     public ArrayList<Task> tasks;
+    public ArrayList<Plan> plans;
     public User(String username,
                 String password,
                 Double homeAddressLatitude,
                 Double homeAddressLongitude,
                 Double workAddressLatitude,
                 Double workAddressLongitude,
-                boolean isStudent,
-                int age) {
+                Boolean isStudent) {
         this.username = username;
         this.password = password;
         this.homeAddressLatitude = homeAddressLatitude;
@@ -23,6 +23,7 @@ public class User {
         this.workAddressLongitude = workAddressLongitude;
         this.isStudent = isStudent;
         this.tasks = new ArrayList<>();
+        this.plans = new ArrayList<>();
     }
     public User() {}
 }

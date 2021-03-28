@@ -21,7 +21,14 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -86,16 +93,16 @@ public class RegistrationPaneOneFragment extends Fragment {
         authenticationViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
         NavController navController = Navigation.findNavController(view);
 
-        EditText username = view.findViewById(R.id.editTextTextPersonName2);
-        username.setText(authenticationViewModel.username.getValue());
-        username.addTextChangedListener(new TextWatcher() {
+        TextInputLayout username = view.findViewById(R.id.outlinedTextField);
+        username.getEditText().setText(authenticationViewModel.username.getValue());
+        username.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                authenticationViewModel.username.setValue(username.getText().toString());
+                authenticationViewModel.username.setValue(username.getEditText().getText().toString());
             }
 
             @Override
@@ -104,9 +111,9 @@ public class RegistrationPaneOneFragment extends Fragment {
             }
         });
 
-        EditText password = view.findViewById(R.id.editTextTextPassword2);
-        password.setText(authenticationViewModel.password.getValue());
-        password.addTextChangedListener(new TextWatcher() {
+        TextInputLayout password = view.findViewById(R.id.outlinedTextField2);
+        password.getEditText().setText(authenticationViewModel.password.getValue());
+        password.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -114,7 +121,7 @@ public class RegistrationPaneOneFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                authenticationViewModel.password.setValue(password.getText().toString());
+                authenticationViewModel.password.setValue(password.getEditText().getText().toString());
             }
 
             @Override
@@ -123,9 +130,9 @@ public class RegistrationPaneOneFragment extends Fragment {
             }
         });
 
-        EditText confirmPassword = view.findViewById(R.id.editTextTextPassword3);
-        confirmPassword.setText(authenticationViewModel.confirmPassword.getValue());
-        confirmPassword.addTextChangedListener(new TextWatcher() {
+        TextInputLayout confirmPassword = view.findViewById(R.id.outlinedTextField3);
+        confirmPassword.getEditText().setText(authenticationViewModel.confirmPassword.getValue());
+        confirmPassword.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -133,7 +140,7 @@ public class RegistrationPaneOneFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                authenticationViewModel.confirmPassword.setValue(confirmPassword.getText().toString());
+                authenticationViewModel.confirmPassword.setValue(confirmPassword.getEditText().getText().toString());
             }
 
             @Override
@@ -143,9 +150,11 @@ public class RegistrationPaneOneFragment extends Fragment {
         });
 
         SwitchMaterial isStudentSwitch = view.findViewById(R.id.switch1);
+        isStudentSwitch.setChecked(authenticationViewModel.isStudent.getValue());
         isStudentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                authenticationViewModel.isStudent.setValue(isChecked);
             }
         });
 
@@ -161,7 +170,33 @@ public class RegistrationPaneOneFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_registrationPaneOneFragment_to_registrationPaneTwoFragment);
+                if(authenticationViewModel.username.getValue().equals("") || authenticationViewModel.password.getValue().equals("") || authenticationViewModel.confirmPassword.getValue().equals("")) {
+                    Snackbar.make(view, "Areas not filled", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    return;
+                }
+                if(!authenticationViewModel.password.getValue().equals(authenticationViewModel.confirmPassword.getValue())){
+                    Snackbar.make(view, "Passwords don't match", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    return;
+                }
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = db.collection("users").document(authenticationViewModel.username.getValue());
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                Snackbar.make(view, "Username already taken!", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                            }
+                            else{
+                                navController.navigate(R.id.action_registrationPaneOneFragment_to_registrationPaneTwoFragment);
+                            }
+                        }
+                        else{
+                            Snackbar.make(view, "Internet error", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                        }
+                    }
+                });
             }
         });
     }
