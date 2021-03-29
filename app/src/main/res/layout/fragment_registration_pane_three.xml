@@ -22,7 +22,7 @@
                 android:id="@+id/textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set Home Address"
+                android:text="Set Work Address"
                 android:paddingTop="5dp"
                 android:textAlignment="center"
                 android:textSize="30sp" />

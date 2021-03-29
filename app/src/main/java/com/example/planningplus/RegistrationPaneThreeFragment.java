@@ -26,6 +26,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegistrationPaneThreeFragment#newInstance} factory method to
@@ -129,7 +131,7 @@ public class RegistrationPaneThreeFragment extends Fragment {
                         authenticationViewModel.workAddressLongitude.getValue(),
                         authenticationViewModel.isStudent.getValue());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(authenticationViewModel.username.getValue()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                db.collection("users").document(Objects.requireNonNull(authenticationViewModel.username.getValue())).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         navController.navigate(R.id.action_registrationPaneThreeFragment_to_userSignInFragment);
