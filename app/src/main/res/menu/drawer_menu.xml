@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/item1"
+            android:icon="@drawable/ic_checklist_24px"
+            android:title="Tasks" />
+
+        <item
+            android:id="@+id/item2"
+            android:icon="@drawable/ic_event_24px"
+            android:title="Plans" />
+
+        <item
+            android:id="@+id/item3"
+            android:icon="@drawable/ic_assignment_24px"
+            android:title="Assigned" />
+
+        <item
+            android:id="@+id/item4"
+            android:icon="@drawable/ic_question_answer_24px"
+            android:title="Questions" />
+    </group>
+
+</menu>
