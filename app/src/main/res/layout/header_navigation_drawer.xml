@@ -11,7 +11,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="?attr/textAppearanceHeadline6"
-        android:text="username" />
+        android:text="\n\nusername" />
 
     <TextView
         android:layout_width="wrap_content"

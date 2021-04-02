@@ -1,5 +1,6 @@
 package com.example.planningplus;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,15 @@ public class UserSignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_userSignInFragment_to_registrationPaneOneFragment);
+            }
+        });
+
+        Button login = view.findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), NavigationDrawerMenu.class);
+                startActivity(intent);
             }
         });
     }
