@@ -1,12 +1,11 @@
 package com.example.planningplus;
 
 public class SubTask {
-    public String timeRequired, subTaskDeadline, subTaskTitle, subTaskDescription;
-    public SubTask(String timeRequired, String subTaskDeadline, String subTaskTitle, String subTaskDescription){
-        this.timeRequired = timeRequired;
-        this.subTaskDeadline = subTaskDeadline;
+    public String subTaskTitle;
+    public boolean completed;
+    public SubTask(String subTaskTitle){
         this.subTaskTitle = subTaskTitle;
-        this.subTaskDescription = subTaskDescription;
+        this.completed = false;
     }
     public SubTask() {}
 }

@@ -14,6 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,12 +94,44 @@ public class UserSignInFragment extends Fragment {
             }
         });
 
+        TextInputLayout loginText = view.findViewById(R.id.outlinedTextField);
+        TextInputLayout passwordText = view.findViewById(R.id.outlinedTextField2);
         Button login = view.findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireActivity(), NavigationDrawerMenu.class);
-                startActivity(intent);
+                if(loginText.getEditText().getText().toString().equals("") || passwordText.getEditText().getText().toString().equals("")){
+                    Snackbar.make(view, "Areas not filled", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    return;
+                }
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = db.collection("users").document(loginText.getEditText().getText().toString());
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                User user = document.toObject(User.class);
+                                if(user.password.equals(passwordText.getEditText().getText().toString())){
+                                    Database.username = user.username;
+                                    Intent intent = new Intent(requireActivity(), NavigationDrawerMenu.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Snackbar.make(view, "Password Incorrect", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                                }
+
+                            }
+                            else{
+                                Snackbar.make(view, "No such user exists", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                            }
+                        }
+                        else{
+                            Snackbar.make(view, "Internet error", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                        }
+                    }
+                });
             }
         });
     }

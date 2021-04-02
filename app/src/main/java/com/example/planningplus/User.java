@@ -8,6 +8,8 @@ public class User {
     public boolean isStudent;
     public ArrayList<Task> tasks;
     public ArrayList<Plan> plans;
+    public ArrayList<Task> assignedTasks;
+    public ArrayList<Question> questions;
     public User(String username,
                 String password,
                 Double homeAddressLatitude,
@@ -24,6 +26,8 @@ public class User {
         this.isStudent = isStudent;
         this.tasks = new ArrayList<>();
         this.plans = new ArrayList<>();
+        this.assignedTasks = new ArrayList<>();
+        this.questions = new ArrayList<>();
     }
     public User() {}
 }
