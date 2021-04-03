@@ -130,6 +130,21 @@ public class RegistrationPaneThreeFragment extends Fragment {
                         authenticationViewModel.workAddressLatitude.getValue(),
                         authenticationViewModel.workAddressLongitude.getValue(),
                         authenticationViewModel.isStudent.getValue());
+
+                Task testTask = new Task("1h",
+                        "Go sleep",
+                        "Go sleep now lol",
+                        "14/1/2005 09:00",
+                        false,
+                        false,
+                        "14/1/2004 08:00",
+                        0.0,
+                        0.0,
+                        false,
+                        "");
+
+                user.tasks.add(testTask);
+
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(Objects.requireNonNull(authenticationViewModel.username.getValue())).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

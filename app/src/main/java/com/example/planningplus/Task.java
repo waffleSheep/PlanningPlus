@@ -1,6 +1,7 @@
 package com.example.planningplus;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Task {
     //time required in milliseconds
@@ -13,6 +14,10 @@ public class Task {
     public String startTime;
     public double latitude;
     public double longitude;
+
+    public boolean isAssigned;
+    public String assignedBy;
+    public Long id;
     public Task(String timeRequired,
                 String taskTitle,
                 String taskDescription,
@@ -21,7 +26,9 @@ public class Task {
                 boolean isProximityAlertUsed,
                 String startTime,
                 double latitude,
-                double longitude){
+                double longitude,
+                boolean isAssigned,
+                String assignedBy){
         this.timeRequired = timeRequired;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
@@ -31,8 +38,12 @@ public class Task {
         this.startTime = startTime;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.isAssigned = isAssigned;
+        this.assignedBy = assignedBy;
         subTasks = new ArrayList<>();
         tags = new ArrayList<>();
+        Random r = new Random();
+        id = r.nextLong();
     }
     public Task(){}
 }

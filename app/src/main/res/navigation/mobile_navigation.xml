@@ -20,8 +20,8 @@
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" />
     <fragment
-        android:id="@+id/questionsFragment"
-        android:name="com.example.planningplus.QuestionsFragment"
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.planningplus.NotificationsFragment"
         android:label="fragment_questions"
-        tools:layout="@layout/fragment_questions" />
+        tools:layout="@layout/fragment_notifications" />
 </navigation>

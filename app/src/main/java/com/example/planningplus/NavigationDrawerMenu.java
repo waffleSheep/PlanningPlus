@@ -38,7 +38,7 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.tasksFragment, R.id.plansFragment, R.id.assignedFragment, R.id.questionsFragment)
+                R.id.tasksFragment, R.id.plansFragment, R.id.assignedFragment, R.id.notificationsFragment)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -58,8 +58,8 @@ public class NavigationDrawerMenu extends AppCompatActivity {
                     getSupportActionBar().setTitle("Plans");
                 else if(id == R.id.assignedFragment)
                     getSupportActionBar().setTitle("Assigned Tasks");
-                else if(id == R.id.questionsFragment)
-                    getSupportActionBar().setTitle("Questions");
+                else if(id == R.id.notificationsFragment)
+                    getSupportActionBar().setTitle("Notifications");
                 //This is for closing the drawer after acting on it
                 drawer.closeDrawer(GravityCompat.START);
                 return true;

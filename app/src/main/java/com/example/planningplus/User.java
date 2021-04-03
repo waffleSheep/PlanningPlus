@@ -9,7 +9,7 @@ public class User {
     public ArrayList<Task> tasks;
     public ArrayList<Plan> plans;
     public ArrayList<Task> assignedTasks;
-    public ArrayList<Question> questions;
+    public ArrayList<Notification> notifications;
     public User(String username,
                 String password,
                 Double homeAddressLatitude,
@@ -27,7 +27,7 @@ public class User {
         this.tasks = new ArrayList<>();
         this.plans = new ArrayList<>();
         this.assignedTasks = new ArrayList<>();
-        this.questions = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
     public User() {}
 }

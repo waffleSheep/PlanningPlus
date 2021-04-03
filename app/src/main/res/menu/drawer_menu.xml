@@ -20,9 +20,9 @@
             android:title="Assigned" />
 
         <item
-            android:id="@+id/questionsFragment"
+            android:id="@+id/notificationsFragment"
             android:icon="@drawable/ic_question_answer_24px"
-            android:title="Questions" />
+            android:title="Notifications" />
     </group>
 
 </menu>
