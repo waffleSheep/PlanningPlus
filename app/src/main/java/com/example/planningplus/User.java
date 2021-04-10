@@ -8,7 +8,7 @@ public class User {
     public boolean isStudent;
     public ArrayList<Task> tasks;
     public ArrayList<Plan> plans;
-    public ArrayList<Task> assignedTasks;
+    public ArrayList<AssignedTask> assignedTasks;
     public ArrayList<Notification> notifications;
     public User(String username,
                 String password,

@@ -18,10 +18,51 @@
         android:id="@+id/tasksFragment"
         android:name="com.example.planningplus.TasksFragment"
         android:label="fragment_tasks"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_tasksFragment_to_taskPaneOne"
+            app:destination="@id/taskPaneOne"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.example.planningplus.NotificationsFragment"
         android:label="fragment_questions"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/taskPaneOne"
+        android:name="com.example.planningplus.TaskPaneOne"
+        android:label="fragment_task_pane_one"
+        tools:layout="@layout/fragment_task_pane_one" >
+        <action
+            android:id="@+id/action_taskPaneOne_to_tasksFragment"
+            app:destination="@id/tasksFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_taskPaneOne_to_taskPaneTwo"
+            app:destination="@id/taskPaneTwo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskPaneTwo"
+        android:name="com.example.planningplus.TaskPaneTwo"
+        android:label="fragment_task_pane_two"
+        tools:layout="@layout/fragment_task_pane_two" >
+        <action
+            android:id="@+id/action_taskPaneTwo_to_taskPaneOne"
+            app:destination="@id/taskPaneOne"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 </navigation>

@@ -2,12 +2,13 @@ package com.example.planningplus;
 
 public class Tag {
     public String tagName;
-    public String timeRequired;
-    public String deadline;
+    public int days;
+    //0 to 24 hours
+    public int hour;
     public Tag(String tagName){
         this.tagName = tagName;
-        this.timeRequired = "";
-        this.deadline = "";
+        this.days = 0;
+        this.hour = 0;
     }
     public Tag() {}
 }

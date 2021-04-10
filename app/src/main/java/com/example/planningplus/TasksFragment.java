@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +19,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.net.UnknownServiceException;
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ public class TasksFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
+    TaskRecyclerAdapter adapter;
     ArrayList<Task> tasks;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,13 +88,14 @@ public class TasksFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        NavController navController = Navigation.findNavController(view);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        adapter = new TaskRecyclerAdapter();
         DocumentReference documentReference = db.collection("users").document(Database.username);
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                adapter = new TaskRecyclerAdapter(user.tasks);
                 recyclerView = view.findViewById(R.id.recyclerView);
                 layoutManager = new LinearLayoutManager(view.getContext());
                 recyclerView.setLayoutManager(layoutManager);
@@ -102,8 +107,15 @@ public class TasksFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                navController.navigate(R.id.action_tasksFragment_to_taskPaneOne);
+            }
+        });
+
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                User user = value.toObject(User.class);
+                adapter.setItems(user.tasks);
             }
         });
 

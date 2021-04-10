@@ -136,11 +136,6 @@ public class RegistrationPaneThreeFragment extends Fragment {
                         "Go sleep now lol",
                         "14/1/2005 09:00",
                         false,
-                        false,
-                        "14/1/2004 08:00",
-                        0.0,
-                        0.0,
-                        false,
                         "");
 
                 user.tasks.add(testTask);

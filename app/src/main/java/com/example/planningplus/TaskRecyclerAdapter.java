@@ -18,7 +18,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     String[] deadlines;
     Long[] ids;
 
-
+/*
     public TaskRecyclerAdapter(ArrayList<Task> tasks){
         ArrayList<String> titlesTemp = new ArrayList<>();
         ArrayList<String> deadlinesTemp = new ArrayList<>();
@@ -34,6 +34,24 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         titles = titlesTemp.toArray(new String[titlesTemp.size()]);
         deadlines = deadlinesTemp.toArray(new String[deadlinesTemp.size()]);
         ids = idsTemp.toArray(new Long[idsTemp.size()]);
+    }
+    */
+    public void setItems(ArrayList<Task> tasks){
+        ArrayList<String> titlesTemp = new ArrayList<>();
+        ArrayList<String> deadlinesTemp = new ArrayList<>();
+        ArrayList<Long> idsTemp = new ArrayList<>();
+        for(Task i : tasks){
+            titlesTemp.add(i.taskTitle);
+            if(i.taskDeadline.equals(""))
+                deadlinesTemp.add("No set deadline");
+            else
+                deadlinesTemp.add(i.taskDeadline);
+            idsTemp.add(i.id);
+        }
+        titles = titlesTemp.toArray(new String[titlesTemp.size()]);
+        deadlines = deadlinesTemp.toArray(new String[deadlinesTemp.size()]);
+        ids = idsTemp.toArray(new Long[idsTemp.size()]);
+        notifyDataSetChanged();
     }
 
     @NonNull
