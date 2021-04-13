@@ -30,7 +30,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Task title"
+                    android:hint="SubTask title"
                     android:paddingRight="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText

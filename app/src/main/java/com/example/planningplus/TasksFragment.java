@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ public class TasksFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     TaskRecyclerAdapter adapter;
+    private TaskViewModel taskViewModel;
     ArrayList<Task> tasks;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -89,6 +91,8 @@ public class TasksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);
+        taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         adapter = new TaskRecyclerAdapter();
         DocumentReference documentReference = db.collection("users").document(Database.username);
@@ -107,6 +111,18 @@ public class TasksFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                taskViewModel.tempTags.setValue(new ArrayList<>());
+                taskViewModel.tempTags.setValue(new ArrayList<>());
+                taskViewModel.taskTitle.setValue("");
+                taskViewModel.taskDescription.setValue("");
+                taskViewModel.specificSubTasks.setValue(new ArrayList<>());
+                taskViewModel.tempTags.setValue(new ArrayList<>());
+                taskViewModel.tempOptions.setValue(new ArrayList<>());
+
+                for(Tag i : Database.userTagsData){
+                    taskViewModel.tempTags.getValue().add(i.tagName);
+                    taskViewModel.tempOptions.getValue().add(false);
+                }
                 navController.navigate(R.id.action_tasksFragment_to_taskPaneOne);
             }
         });

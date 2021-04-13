@@ -8,6 +8,7 @@ public class User {
     public boolean isStudent;
     public ArrayList<Task> tasks;
     public ArrayList<Plan> plans;
+    public ArrayList<Tag> tags;
     public ArrayList<AssignedTask> assignedTasks;
     public ArrayList<Notification> notifications;
     public User(String username,
@@ -25,6 +26,7 @@ public class User {
         this.workAddressLongitude = workAddressLongitude;
         this.isStudent = isStudent;
         this.tasks = new ArrayList<>();
+        this.tags = new ArrayList<>();
         this.plans = new ArrayList<>();
         this.assignedTasks = new ArrayList<>();
         this.notifications = new ArrayList<>();

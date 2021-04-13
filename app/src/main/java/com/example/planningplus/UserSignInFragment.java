@@ -115,6 +115,7 @@ public class UserSignInFragment extends Fragment {
                                 User user = document.toObject(User.class);
                                 if(user.password.equals(passwordText.getEditText().getText().toString())){
                                     Database.username = user.username;
+                                    Database.userTagsData = user.tags;
                                     Intent intent = new Intent(requireActivity(), NavigationDrawerMenu.class);
                                     startActivity(intent);
                                 }

@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -131,14 +130,11 @@ public class RegistrationPaneThreeFragment extends Fragment {
                         authenticationViewModel.workAddressLongitude.getValue(),
                         authenticationViewModel.isStudent.getValue());
 
-                Task testTask = new Task("1h",
-                        "Go sleep",
-                        "Go sleep now lol",
-                        "14/1/2005 09:00",
-                        false,
-                        "");
-
-                user.tasks.add(testTask);
+                user.tags.add(new Tag("RSL"));
+                user.tags.add(new Tag("Home"));
+                user.tags.add(new Tag("Work"));
+                user.tags.add(new Tag("Sunrise"));
+                user.tags.add(new Tag("Sunset"));
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(Objects.requireNonNull(authenticationViewModel.username.getValue())).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -20,22 +20,22 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/previous"
+            android:id="@+id/textTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_marginStart="19dp"
             android:gravity="center"
-            android:text="Previous"
+            android:text="Subtask text"
             android:textAlignment="center"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/next"
+            app:layout_constraintEnd_toStartOf="@+id/remove"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="721dp" />
 
         <ImageButton
-            android:id="@+id/next"
+            android:id="@+id/remove"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -45,7 +45,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/previous"
+            app:layout_constraintStart_toEndOf="@+id/textTitle"
             app:srcCompat="@drawable/red_minus"
             tools:layout_editor_absoluteY="721dp" />
     </RelativeLayout>

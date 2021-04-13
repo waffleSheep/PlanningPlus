@@ -5,13 +5,33 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +39,13 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class TaskPaneTwo extends Fragment {
+
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    SubTaskRecyclerAdapter adapter;
+    RequestQueue requestQueue;
+    String url = "http://54.251.192.205:8080/suggestSubTask";
+    TaskViewModel taskViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,7 +98,26 @@ public class TaskPaneTwo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new SubTaskRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.setItems(taskViewModel.specificSubTasks.getValue());
+
+        taskViewModel.specificSubTasks.setValue(adapter.getSubTaskTitles());
+
         NavController navController = Navigation.findNavController(view);
+
+        TextInputLayout subTaskTitle = view.findViewById(R.id.outlinedTextField);
+        Button add = view.findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.addItem(subTaskTitle.getEditText().getText().toString());
+            }
+        });
 
         Button previous = view.findViewById(R.id.previous);
         previous.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +131,54 @@ public class TaskPaneTwo extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                navController.navigate(R.id.action_taskPaneTwo_to_taskPaneThree);
             }
         });
+
+        if(taskViewModel.tempOptions.getValue().get(0) && !taskViewModel.RSLCalculated.getValue().equals(Boolean.TRUE)){
+            taskViewModel.RSLCalculated.setValue(true);
+            taskViewModel.RSLIntent.setValue(taskViewModel.taskTitle.getValue());
+            requestUrl(view, taskViewModel.taskTitle.getValue());
+        }
+
+    }
+
+    public void requestUrl(View view, String intent){
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("document", intent);
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject response1 = response.getJSONObject("result");
+                    adapter.addItem("call " + response1.getString("subtask"));
+                    taskViewModel.RSLSubTaskName.setValue("call " + response1.getString("subtask"));
+                }
+                catch (JSONException exception){
+                    Snackbar.make(view, "response fail1", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        requestQueue.add(jsonObjectRequest);
     }
 }

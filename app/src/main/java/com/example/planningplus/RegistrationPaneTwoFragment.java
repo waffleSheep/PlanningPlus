@@ -1,8 +1,6 @@
 package com.example.planningplus;
 
 import android.annotation.SuppressLint;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,9 +19,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.List;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.

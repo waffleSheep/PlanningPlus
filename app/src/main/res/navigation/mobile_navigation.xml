@@ -64,5 +64,52 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_taskPaneTwo_to_taskPaneThree"
+            app:destination="@id/taskPaneThree"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskPaneThree"
+        android:name="com.example.planningplus.TaskPaneThree"
+        android:label="fragment_task_pane_three"
+        tools:layout="@layout/fragment_task_pane_three" >
+        <action
+            android:id="@+id/action_taskPaneThree_to_taskPaneTwo"
+            app:destination="@id/taskPaneTwo"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_taskPaneThree_to_taskPaneFour"
+            app:destination="@id/taskPaneFour"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskPaneFour"
+        android:name="com.example.planningplus.TaskPaneFour"
+        android:label="fragment_task_pane_four"
+        tools:layout="@layout/fragment_task_pane_four" >
+        <action
+            android:id="@+id/action_taskPaneFour_to_taskPaneThree"
+            app:destination="@id/taskPaneThree"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_taskPaneFour_to_tasksFragment"
+            app:destination="@id/tasksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>
