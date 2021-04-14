@@ -123,6 +123,8 @@ public class TasksFragment extends Fragment {
                     taskViewModel.tempTags.getValue().add(i.tagName);
                     taskViewModel.tempOptions.getValue().add(false);
                 }
+
+                taskViewModel.assignedState.setValue(false);
                 navController.navigate(R.id.action_tasksFragment_to_taskPaneOne);
             }
         });

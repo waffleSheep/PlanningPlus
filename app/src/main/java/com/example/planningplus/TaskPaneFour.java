@@ -132,39 +132,40 @@ public class TaskPaneFour extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.collection("users").document(Database.username);
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        User user = documentSnapshot.toObject(User.class);
-                        Task task = new Task(taskViewModel.days.getValue() + "d" + taskViewModel.hours.getValue() + "h",
-                                taskViewModel.taskTitle.getValue(),
-                                taskViewModel.taskDescription.getValue(),
-                                taskViewModel.taskDeadlineDate.getValue() + " " + taskViewModel.taskDeadlineTime.getValue(),
-                                false,
-                                "");
-                        for(String i : taskViewModel.specificSubTasks.getValue())
-                            task.subTasks.add(new SubTask(i));
+                if (taskViewModel.assignedState.getValue()) {
+                    navController.navigate(R.id.action_taskPaneFour_to_assignedTaskPaneFive);
+                } else {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference docRef = db.collection("users").document(Database.username);
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            User user = documentSnapshot.toObject(User.class);
+                            Task task = new Task(taskViewModel.days.getValue() + "d" + taskViewModel.hours.getValue() + "h",
+                                    taskViewModel.taskTitle.getValue(),
+                                    taskViewModel.taskDescription.getValue(),
+                                    taskViewModel.taskDeadlineDate.getValue() + " " + taskViewModel.taskDeadlineTime.getValue(),
+                                    false,
+                                    "");
+                            for (String i : taskViewModel.specificSubTasks.getValue())
+                                task.subTasks.add(new SubTask(i));
 
-                        for(int i = 0; i < taskViewModel.tempTags.getValue().size(); ++i)
-                            if(taskViewModel.tempOptions.getValue().get(i))
-                                task.tags.add(new Tag(taskViewModel.tempTags.getValue().get(i)));
+                            for (int i = 0; i < taskViewModel.tempTags.getValue().size(); ++i)
+                                if (taskViewModel.tempOptions.getValue().get(i))
+                                    task.tags.add(new Tag(taskViewModel.tempTags.getValue().get(i)));
 
-                        user.tasks.add(task);
-                        DocumentReference docRef1 = db.collection("users").document(Database.username);
-                        docRef1.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                            }
-                        });
-                    }
-                });
-                navController.navigate(R.id.action_taskPaneFour_to_tasksFragment);
+                            user.tasks.add(task);
+                            DocumentReference docRef1 = db.collection("users").document(Database.username);
+                            docRef1.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                }
+                            });
+                        }
+                    });
+                    navController.navigate(R.id.action_taskPaneFour_to_tasksFragment);
+                }
             }
         });
-
-
-
     }
 }

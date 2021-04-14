@@ -8,7 +8,22 @@
         android:id="@+id/assignedFragment"
         android:name="com.example.planningplus.AssignedFragment"
         android:label="fragment_assigned"
-        tools:layout="@layout/fragment_assigned" />
+        tools:layout="@layout/fragment_assigned" >
+        <action
+            android:id="@+id/action_assignedFragment_to_taskPaneOne"
+            app:destination="@id/taskPaneOne"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_assignedFragment_to_assignedTaskPaneFive"
+            app:destination="@id/assignedTaskPaneFive"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
     <fragment
         android:id="@+id/plansFragment"
         android:name="com.example.planningplus.PlansFragment"
@@ -51,6 +66,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_taskPaneOne_to_assignedFragment"
+            app:destination="@id/assignedFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/taskPaneTwo"
@@ -107,6 +129,33 @@
         <action
             android:id="@+id/action_taskPaneFour_to_tasksFragment"
             app:destination="@id/tasksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_taskPaneFour_to_assignedTaskPaneFive"
+            app:destination="@id/assignedTaskPaneFive"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/assignedTaskPaneFive"
+        android:name="com.example.planningplus.AssignedTaskPaneFive"
+        android:label="fragment_assigned_task_pane_five"
+        tools:layout="@layout/fragment_assigned_task_pane_five" >
+        <action
+            android:id="@+id/action_assignedTaskPaneFive_to_taskPaneFour"
+            app:destination="@id/taskPaneFour"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_assignedTaskPaneFive_to_assignedFragment"
+            app:destination="@id/assignedFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

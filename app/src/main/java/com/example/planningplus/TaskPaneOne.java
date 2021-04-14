@@ -89,12 +89,14 @@ public class TaskPaneOne extends Fragment {
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);
 
-        for(i = 0; i < taskViewModel.tempTags.getValue().size(); ++i){
-            Chip chip = new Chip(requireContext());
-            chip.setText(taskViewModel.tempTags.getValue().get(i));
-            chip.setCheckable(true);
-            chip.setChecked(taskViewModel.tempOptions.getValue().get(i));
-            chipGroup.addView(chip);
+        if(!taskViewModel.assignedState.getValue()) {
+            for (i = 0; i < taskViewModel.tempTags.getValue().size(); ++i) {
+                Chip chip = new Chip(requireContext());
+                chip.setText(taskViewModel.tempTags.getValue().get(i));
+                chip.setCheckable(true);
+                chip.setChecked(taskViewModel.tempOptions.getValue().get(i));
+                chipGroup.addView(chip);
+            }
         }
 
         NavController navController = Navigation.findNavController(view);
@@ -134,7 +136,12 @@ public class TaskPaneOne extends Fragment {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_taskPaneOne_to_tasksFragment);
+                if(taskViewModel.assignedState.getValue()){
+                    navController.navigate(R.id.action_taskPaneOne_to_assignedFragment);
+                }
+                else {
+                    navController.navigate(R.id.action_taskPaneOne_to_tasksFragment);
+                }
             }
         });
 
@@ -161,9 +168,11 @@ public class TaskPaneOne extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i = 0; i < chipGroup.getChildCount(); ++i){
-                    Chip chip = (Chip) chipGroup.getChildAt(i);
-                    taskViewModel.tempOptions.getValue().set(i, chip.isChecked());
+                if(!taskViewModel.assignedState.getValue()) {
+                    for (int i = 0; i < chipGroup.getChildCount(); ++i) {
+                        Chip chip = (Chip) chipGroup.getChildAt(i);
+                        taskViewModel.tempOptions.getValue().set(i, chip.isChecked());
+                    }
                 }
                 navController.navigate(R.id.action_taskPaneOne_to_taskPaneTwo);
             }

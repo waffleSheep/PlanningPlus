@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/task_title"
-            android:layout_width="207dp"
+            android:layout_width="369dp"
             android:layout_height="39dp"
             android:layout_marginStart="16dp"
             android:text="Task Name"
