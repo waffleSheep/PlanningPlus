@@ -24,7 +24,7 @@ public class TaskViewModel extends ViewModel {
     // Assigned Task Stuff
     public MutableLiveData<Boolean> assignedState = new MutableLiveData<>(false);
     public MutableLiveData<ArrayList<String>> userNames = new MutableLiveData<>(new ArrayList<>());
-
+    public MutableLiveData<String> assignerName = new MutableLiveData<>("");
     // Notifications
 
 }
