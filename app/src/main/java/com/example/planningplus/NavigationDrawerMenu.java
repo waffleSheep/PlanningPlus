@@ -1,6 +1,15 @@
 package com.example.planningplus;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -11,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -52,21 +62,22 @@ public class NavigationDrawerMenu extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                NavigationUI.onNavDestinationSelected(item,navController);
+                NavigationUI.onNavDestinationSelected(item, navController);
 
-                if(id == R.id.tasksFragment)
+                if (id == R.id.tasksFragment)
                     getSupportActionBar().setTitle("Tasks");
-                else if(id == R.id.plansFragment)
+                else if (id == R.id.plansFragment)
                     getSupportActionBar().setTitle("Plans");
-                else if(id == R.id.assignedFragment)
+                else if (id == R.id.assignedFragment)
                     getSupportActionBar().setTitle("Assigned Tasks");
-                else if(id == R.id.notificationsFragment)
+                else if (id == R.id.notificationsFragment)
                     getSupportActionBar().setTitle("Notifications");
                 //This is for closing the drawer after acting on it
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+
     }
 
     @Override
@@ -81,5 +92,34 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void proximityAlert(double latitude, double longitude, String planTitle, String planDescription, String username){
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Intent intent = new Intent("com.example.planningplus.proximityAlert").addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("title", planTitle);
+        intent.putExtra("description", planDescription);
+        intent.putExtra("username", username);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(getApplicationContext(), 5, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            String[] array = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+            ActivityCompat.requestPermissions(this, array, 6);
+            Log.i("test", "remind");
+            return;
+        }
+        locationManager.addProximityAlert(latitude, longitude, 1000F, -1, proximityIntent);
+
+        IntentFilter filter = new IntentFilter("com.example.planningplus.proximityAlert");
+        Log.i("test", "remind1");
+        this.registerReceiver(new ProximityAlertBroadcastReceiver(), filter);
     }
 }

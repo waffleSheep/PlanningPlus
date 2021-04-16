@@ -23,12 +23,23 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_assignedFragment_to_assignedTaskViewFragment"
+            app:destination="@id/assignedTaskViewFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/plansFragment"
         android:name="com.example.planningplus.PlansFragment"
         android:label="fragment_plans"
-        tools:layout="@layout/fragment_plans" />
+        tools:layout="@layout/fragment_plans" >
+        <action
+            android:id="@+id/action_plansFragment_to_planTimedFragment"
+            app:destination="@id/planTimedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.example.planningplus.TasksFragment"
@@ -180,5 +191,27 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/assignedTaskViewFragment"
+        android:name="com.example.planningplus.AssignedTaskViewFragment"
+        android:label="fragment_assigned_task_view"
+        tools:layout="@layout/fragment_assigned_task_view" >
+        <action
+            android:id="@+id/action_assignedTaskViewFragment_to_assignedFragment"
+            app:destination="@id/assignedFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/planTimedFragment"
+        android:name="com.example.planningplus.PlanTimedFragment"
+        android:label="fragment_plan_timed"
+        tools:layout="@layout/fragment_plan_timed" >
+        <action
+            android:id="@+id/action_planTimedFragment_to_plansFragment"
+            app:destination="@id/plansFragment" />
     </fragment>
 </navigation>

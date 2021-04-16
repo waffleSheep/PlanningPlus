@@ -5,40 +5,39 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
+
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import java.net.UnknownServiceException;
-import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TasksFragment#newInstance} factory method to
+ * Use the {@link PlanTimedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TasksFragment extends Fragment {
-
+public class PlanTimedFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    TaskRecyclerAdapter adapter;
-    private TaskViewModel taskViewModel;
-    ArrayList<Task> tasks;
+    TimedPlansRecyclerAdapter adapter;
+    String currentSelectedDate = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +48,7 @@ public class TasksFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TasksFragment() {
+    public PlanTimedFragment() {
         // Required empty public constructor
     }
 
@@ -59,11 +58,11 @@ public class TasksFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TasksFragment.
+     * @return A new instance of fragment PlanTimedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TasksFragment newInstance(String param1, String param2) {
-        TasksFragment fragment = new TasksFragment();
+    public static PlanTimedFragment newInstance(String param1, String param2) {
+        PlanTimedFragment fragment = new PlanTimedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,51 +83,48 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tasks, container, false);
+        return inflater.inflate(R.layout.fragment_plan_timed, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
-        taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
-
-        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
-
+        recyclerView = view.findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TimedPlansRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        adapter = new TaskRecyclerAdapter();
         DocumentReference documentReference = db.collection("users").document(Database.username);
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                recyclerView = view.findViewById(R.id.recyclerView);
-                layoutManager = new LinearLayoutManager(view.getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapter);
-            }
-        });
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        MaterialCalendarView materialCalendarView = view.findViewById(R.id.calendarView);
+        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onClick(View view) {
-                taskViewModel.tempTags.setValue(new ArrayList<>());
-                taskViewModel.tempTags.setValue(new ArrayList<>());
-                taskViewModel.taskTitle.setValue("");
-                taskViewModel.taskDescription.setValue("");
-                taskViewModel.specificSubTasks.setValue(new ArrayList<>());
-                taskViewModel.tempTags.setValue(new ArrayList<>());
-                taskViewModel.tempOptions.setValue(new ArrayList<>());
-
-                for(Tag i : Database.userTagsData){
-                    taskViewModel.tempTags.getValue().add(i.tagName);
-                    taskViewModel.tempOptions.getValue().add(false);
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                if(selected){
+                    StringBuilder stringBuilder = new StringBuilder("");
+                    if(date.getDay() < 10){
+                        stringBuilder.append("0");
+                    }
+                    stringBuilder.append(date.getDay());
+                    stringBuilder.append("/");
+                    if(date.getMonth() < 10){
+                        stringBuilder.append("0");
+                    }
+                    stringBuilder.append(date.getMonth());
+                    stringBuilder.append("/");
+                    stringBuilder.append(date.getYear());
+                    currentSelectedDate = stringBuilder.toString();
+                    Log.i("date", currentSelectedDate);
+                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            User user = documentSnapshot.toObject(User.class);
+                            adapter.setItems(user.plans, currentSelectedDate);
+                        }
+                    });
                 }
-
-                taskViewModel.assignedState.setValue(false);
-                navController.navigate(R.id.action_tasksFragment_to_taskPaneOne);
             }
         });
 
@@ -136,9 +132,13 @@ public class TasksFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 User user = value.toObject(User.class);
-                adapter.setItems(user.tasks);
+                if(currentSelectedDate != null){
+                    adapter.setItems(user.plans, currentSelectedDate);
+                }
             }
         });
 
     }
+
+
 }

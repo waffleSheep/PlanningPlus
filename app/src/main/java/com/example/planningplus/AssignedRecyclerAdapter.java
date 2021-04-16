@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -88,6 +90,9 @@ public class AssignedRecyclerAdapter extends RecyclerView.Adapter<AssignedRecycl
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Database.id = ids[getAdapterPosition()];
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.action_assignedFragment_to_assignedTaskViewFragment);
                 }
             });
         }
