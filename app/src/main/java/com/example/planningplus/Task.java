@@ -52,7 +52,7 @@ public class Task implements Comparable<Task>{
                 return -1;
             }
         } catch (ParseException e) {
-            return -1;
+            return 1;
         }
     }
 }

@@ -136,7 +136,6 @@ public class RegistrationPaneThreeFragment extends Fragment {
                 user.tags.add(new Tag("Work"));
                 user.tags.add(new Tag("Sunrise"));
                 user.tags.add(new Tag("Sunset"));
-                user.plans.add(new Plan("16/04/2021", "08:20", "test plan", "", false, (double) 0, (double) 0));
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(Objects.requireNonNull(authenticationViewModel.username.getValue())).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {

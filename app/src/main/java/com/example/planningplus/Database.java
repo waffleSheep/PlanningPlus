@@ -6,4 +6,5 @@ public class Database {
     public static String username;
     public static ArrayList<Tag> userTagsData;
     public static Long id;
+    public static String taskDesc;
 }

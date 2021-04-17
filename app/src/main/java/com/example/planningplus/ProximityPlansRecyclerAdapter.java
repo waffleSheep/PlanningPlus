@@ -16,30 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TimedPlansRecyclerAdapter extends RecyclerView.Adapter<TimedPlansRecyclerAdapter.ViewHolder>{
+public class ProximityPlansRecyclerAdapter extends RecyclerView.Adapter<ProximityPlansRecyclerAdapter.ViewHolder>{
 
     String[] titles;
     String[] deadlines;
 
-    public TimedPlansRecyclerAdapter(){
+    public ProximityPlansRecyclerAdapter(){
         titles = new String[0];
         deadlines = new String[0];
     }
 
-    public void setItems(ArrayList<Plan> plans, String date){
-
+    public void setItems(ArrayList<Plan> plans){
         ArrayList<Plan> plansOnSelectedDay = new ArrayList<>();
         for(Plan i : plans){
-            if(i.planTimeDate.equals(date) && !i.hasProximityAlert){
+            if(i.hasProximityAlert){
                 plansOnSelectedDay.add(i);
             }
         }
-        Collections.sort(plansOnSelectedDay);
         ArrayList<String> titlesTemp = new ArrayList<>();
         ArrayList<String> deadlinesTemp = new ArrayList<>();
         for(Plan i : plansOnSelectedDay){
             titlesTemp.add(i.planTitle);
-            deadlinesTemp.add(i.planTimeDate + " " + i.planTimeTime);
+            deadlinesTemp.add(i.latitude + " " + i.longitude);
         }
         titles = titlesTemp.toArray(new String[titlesTemp.size()]);
         deadlines = deadlinesTemp.toArray(new String[deadlinesTemp.size()]);
@@ -49,7 +47,7 @@ public class TimedPlansRecyclerAdapter extends RecyclerView.Adapter<TimedPlansRe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timed_plan_card_layout,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.proximity_plan_card_layout,parent,false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }

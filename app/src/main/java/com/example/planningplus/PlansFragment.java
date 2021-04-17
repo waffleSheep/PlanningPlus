@@ -82,7 +82,7 @@ public class PlansFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //((NavigationDrawerMenu) requireActivity()).proximityAlert(1.348035, 103.958419, "test title", "test description", Database.username);
+        //((NavigationDrawerMenu) requireActivity()).timedAlert("test title", "test description", Database.username, System.currentTimeMillis() + 100);
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);

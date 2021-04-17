@@ -2,6 +2,7 @@ package com.example.planningplus;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -50,34 +51,13 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.tasksFragment, R.id.plansFragment, R.id.assignedFragment, R.id.notificationsFragment)
+                R.id.mainFragment, R.id.tasksFragment, R.id.plansFragment, R.id.assignedFragment)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        getSupportActionBar().setTitle("Tasks");
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-
-                NavigationUI.onNavDestinationSelected(item, navController);
-
-                if (id == R.id.tasksFragment)
-                    getSupportActionBar().setTitle("Tasks");
-                else if (id == R.id.plansFragment)
-                    getSupportActionBar().setTitle("Plans");
-                else if (id == R.id.assignedFragment)
-                    getSupportActionBar().setTitle("Assigned Tasks");
-                else if (id == R.id.notificationsFragment)
-                    getSupportActionBar().setTitle("Notifications");
-                //This is for closing the drawer after acting on it
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
+        getSupportActionBar().setTitle("Home");
     }
 
     @Override
@@ -85,6 +65,19 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_drawer_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(NavigationDrawerMenu.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -104,13 +97,6 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         PendingIntent proximityIntent = PendingIntent.getBroadcast(getApplicationContext(), 5, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             String[] array = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
             ActivityCompat.requestPermissions(this, array, 6);
             Log.i("test", "remind");
@@ -121,5 +107,16 @@ public class NavigationDrawerMenu extends AppCompatActivity {
         IntentFilter filter = new IntentFilter("com.example.planningplus.proximityAlert");
         Log.i("test", "remind1");
         this.registerReceiver(new ProximityAlertBroadcastReceiver(), filter);
+    }
+
+    public void timedAlert(String planTitle, String planDescription, String username, Long time){
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(NavigationDrawerMenu.this, TimedBroadcastReceiver.class);
+        intent.putExtra("title", planTitle);
+        intent.putExtra("description", planDescription);
+        intent.putExtra("username", username);
+        intent.setAction(Long.toString(System.currentTimeMillis()));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 }

@@ -21,7 +21,7 @@
                 <action android:name="com.example.planningplus.proximityAlert" />
             </intent-filter>
         </receiver>
-
+        <receiver  android:process=":remote" android:name="com.example.planningplus.TimedBroadcastReceiver"/>
         <activity
             android:name=".NavigationDrawerMenu"
             android:label="@string/title_activity_navigation_drawer_menu"

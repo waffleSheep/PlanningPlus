@@ -5,6 +5,11 @@
         android:id="@+id/group"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/mainFragment"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+
+        <item
             android:id="@+id/tasksFragment"
             android:icon="@drawable/ic_checklist_24px"
             android:title="Tasks" />
@@ -18,11 +23,6 @@
             android:id="@+id/assignedFragment"
             android:icon="@drawable/ic_assignment_24px"
             android:title="Assigned" />
-
-        <item
-            android:id="@+id/notificationsFragment"
-            android:icon="@drawable/ic_question_answer_24px"
-            android:title="Notifications" />
     </group>
 
 </menu>

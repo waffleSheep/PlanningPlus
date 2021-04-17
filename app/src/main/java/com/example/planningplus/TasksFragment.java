@@ -121,6 +121,10 @@ public class TasksFragment extends Fragment {
                 taskViewModel.specificSubTasks.setValue(new ArrayList<>());
                 taskViewModel.tempTags.setValue(new ArrayList<>());
                 taskViewModel.tempOptions.setValue(new ArrayList<>());
+                taskViewModel.days.setValue("0");
+                taskViewModel.hours.setValue("0");
+                taskViewModel.taskDeadlineTime.setValue("");
+                taskViewModel.taskDeadlineTime.setValue("");
 
                 for(Tag i : Database.userTagsData){
                     taskViewModel.tempTags.getValue().add(i.tagName);

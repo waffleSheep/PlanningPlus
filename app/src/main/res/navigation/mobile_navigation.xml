@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/tasksFragment">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/assignedFragment"
         android:name="com.example.planningplus.AssignedFragment"
@@ -38,7 +38,18 @@
         tools:layout="@layout/fragment_plans" >
         <action
             android:id="@+id/action_plansFragment_to_planTimedFragment"
-            app:destination="@id/planTimedFragment" />
+            app:destination="@id/planTimedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_plansFragment_to_planProximityFragment"
+            app:destination="@id/planProximityFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/tasksFragment"
@@ -60,11 +71,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <fragment
-        android:id="@+id/notificationsFragment"
-        android:name="com.example.planningplus.NotificationsFragment"
-        android:label="fragment_questions"
-        tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/taskPaneOne"
         android:name="com.example.planningplus.TaskPaneOne"
@@ -191,6 +197,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_taskViewFragment_to_askQuestionFragment"
+            app:destination="@id/askQuestionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/assignedTaskViewFragment"
@@ -212,6 +225,128 @@
         tools:layout="@layout/fragment_plan_timed" >
         <action
             android:id="@+id/action_planTimedFragment_to_plansFragment"
-            app:destination="@id/plansFragment" />
+            app:destination="@id/plansFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planTimedFragment_to_planPaneOneFragment"
+            app:destination="@id/planPaneOneFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/planProximityFragment"
+        android:name="com.example.planningplus.PlanProximityFragment"
+        android:label="fragment_plan_proximity"
+        tools:layout="@layout/fragment_plan_proximity" >
+        <action
+            android:id="@+id/action_planProximityFragment_to_plansFragment"
+            app:destination="@id/plansFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planProximityFragment_to_planPaneOneFragment"
+            app:destination="@id/planPaneOneFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/planPaneOneFragment"
+        android:name="com.example.planningplus.PlanPaneOneFragment"
+        android:label="fragment_plan_pane_one"
+        tools:layout="@layout/fragment_plan_pane_one" >
+        <action
+            android:id="@+id/action_planPaneOneFragment_to_planTimedFragment"
+            app:destination="@id/planTimedFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planPaneOneFragment_to_planProximityFragment"
+            app:destination="@id/planProximityFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planPaneOneFragment_to_planPaneTwoProximityFragment"
+            app:destination="@id/planPaneTwoProximityFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_planPaneOneFragment_to_planPaneTwoTimedFragment"
+            app:destination="@id/planPaneTwoTimedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.planningplus.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/planPaneTwoProximityFragment"
+        android:name="com.example.planningplus.PlanPaneTwoProximityFragment"
+        android:label="fragment_plan_pane_two_proximity"
+        tools:layout="@layout/fragment_plan_pane_two_proximity" >
+        <action
+            android:id="@+id/action_planPaneTwoProximityFragment_to_planPaneOneFragment"
+            app:destination="@id/planPaneOneFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planPaneTwoProximityFragment_to_plansFragment"
+            app:destination="@id/plansFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/planPaneTwoTimedFragment"
+        android:name="com.example.planningplus.PlanPaneTwoTimedFragment"
+        android:label="PlanPaneTwoTimedFragment" >
+        <action
+            android:id="@+id/action_planPaneTwoTimedFragment_to_planPaneOneFragment"
+            app:destination="@id/planPaneOneFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_planPaneTwoTimedFragment_to_plansFragment"
+            app:destination="@id/plansFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/askQuestionFragment"
+        android:name="com.example.planningplus.AskQuestionFragment"
+        android:label="fragment_ask_question"
+        tools:layout="@layout/fragment_ask_question" >
+        <action
+            android:id="@+id/action_askQuestionFragment_to_taskViewFragment"
+            app:destination="@id/taskViewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 </navigation>

@@ -56,7 +56,9 @@ public class PlanRecyclerAdapter extends RecyclerView.Adapter<PlanRecyclerAdapte
                     NavController navController = Navigation.findNavController(v);
                     if(getAdapterPosition() == 0){
                         navController.navigate(R.id.action_plansFragment_to_planTimedFragment);
-
+                    }
+                    else if(getAdapterPosition() == 1){
+                        navController.navigate(R.id.action_plansFragment_to_planProximityFragment);
                     }
                 }
             });

@@ -11,37 +11,26 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.widget.TextView;
 
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-
-import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PlanTimedFragment#newInstance} factory method to
+ * Use the {@link PlanProximityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlanTimedFragment extends Fragment {
+public class PlanProximityFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    TimedPlansRecyclerAdapter adapter;
-    String currentSelectedDate = null;
+    ProximityPlansRecyclerAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +41,7 @@ public class PlanTimedFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PlanTimedFragment() {
+    public PlanProximityFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +51,11 @@ public class PlanTimedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PlanTimedFragment.
+     * @return A new instance of fragment PlanProximityFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlanTimedFragment newInstance(String param1, String param2) {
-        PlanTimedFragment fragment = new PlanTimedFragment();
+    public static PlanProximityFragment newInstance(String param1, String param2) {
+        PlanProximityFragment fragment = new PlanProximityFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -87,7 +76,7 @@ public class PlanTimedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan_timed, container, false);
+        return inflater.inflate(R.layout.fragment_plan_proximity, container, false);
     }
 
     @Override
@@ -95,71 +84,36 @@ public class PlanTimedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimedPlansRecyclerAdapter();
+        adapter = new ProximityPlansRecyclerAdapter();
         recyclerView.setAdapter(adapter);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = db.collection("users").document(Database.username);
-
-        MaterialCalendarView materialCalendarView = view.findViewById(R.id.calendarView);
-        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                if(selected){
-                    StringBuilder stringBuilder = new StringBuilder("");
-                    if(date.getDay() < 10){
-                        stringBuilder.append("0");
-                    }
-                    stringBuilder.append(date.getDay());
-                    stringBuilder.append("/");
-                    if(date.getMonth() < 10){
-                        stringBuilder.append("0");
-                    }
-                    stringBuilder.append(date.getMonth());
-                    stringBuilder.append("/");
-                    stringBuilder.append(date.getYear());
-                    currentSelectedDate = stringBuilder.toString();
-                    Log.i("date", currentSelectedDate);
-                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            User user = documentSnapshot.toObject(User.class);
-                            adapter.setItems(user.plans, currentSelectedDate);
-                        }
-                    });
-                }
-            }
-        });
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskViewModel.hasProximityAlert.setValue(false);
+                taskViewModel.hasProximityAlert.setValue(true);
                 taskViewModel.planTitle.setValue("");
                 taskViewModel.planDescription.setValue("");
                 taskViewModel.planTimeTime.setValue("");
                 taskViewModel.planTimeDate.setValue("");
                 taskViewModel.planLatitude.setValue(1.361658542823889);
                 taskViewModel.planLongitude.setValue(103.80224837281581);
-                navController.navigate(R.id.action_planTimedFragment_to_planPaneOneFragment);
+                navController.navigate(R.id.action_planProximityFragment_to_planPaneOneFragment);
             }
         });
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection("users").document(Database.username);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 User user = value.toObject(User.class);
-                if(currentSelectedDate != null){
-                    adapter.setItems(user.plans, currentSelectedDate);
-                }
+                adapter.setItems(user.plans);
             }
         });
-
     }
-
-
 }

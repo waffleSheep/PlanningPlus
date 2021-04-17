@@ -146,13 +146,6 @@ public class TaskViewFragment extends Fragment {
             }
         });
 
-        askQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("users").document(Database.username);
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -165,6 +158,7 @@ public class TaskViewFragment extends Fragment {
                         task = i;
                 taskTitle.setText(task.taskTitle);
                 taskDescription.setText("Task description: " + task.taskDescription);
+                Database.taskDesc = task.taskDescription;
                 timeRequired.setText("Time required: " + task.timeRequired);
                 taskDeadline.setText("Deadline: " + task.taskDeadline);
                 assignedBy.setText("Assigned by: " + task.assignedBy);
@@ -184,6 +178,11 @@ public class TaskViewFragment extends Fragment {
             }
         });
 
-
+        askQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_taskViewFragment_to_askQuestionFragment);
+            }
+        });
     }
 }

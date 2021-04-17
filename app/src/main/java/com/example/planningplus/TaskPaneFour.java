@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.DragAndDropPermissions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -153,6 +158,93 @@ public class TaskPaneFour extends Fragment {
                             for (int i = 0; i < taskViewModel.tempTags.getValue().size(); ++i)
                                 if (taskViewModel.tempOptions.getValue().get(i))
                                     task.tags.add(new Tag(taskViewModel.tempTags.getValue().get(i)));
+
+                            for(Tag i : task.tags){
+                                if(i.tagName.equals("Home")){
+                                    Plan plan = new Plan("",
+                                            "",
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            true,
+                                            user.homeAddressLatitude,
+                                            user.homeAddressLongitude);
+                                    ((NavigationDrawerMenu) getActivity()).proximityAlert(user.homeAddressLatitude,
+                                            user.homeAddressLongitude,
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            user.username);
+                                    user.plans.add(plan);
+                                }
+                                else if(i.tagName.equals("Work")){
+                                    Plan plan = new Plan("",
+                                            "",
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            true,
+                                            user.workAddressLatitude,
+                                            user.workAddressLongitude);
+                                    ((NavigationDrawerMenu) getActivity()).proximityAlert(user.workAddressLatitude,
+                                            user.workAddressLongitude,
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            user.username);
+                                    user.plans.add(plan);
+                                }
+                                else if(i.tagName.equals("Sunrise")) {
+                                    Date date = new Date(System.currentTimeMillis());
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    String strDate = simpleDateFormat.format(date);
+                                    String[] dateTime = strDate.split(" ");
+                                    String notificationString = dateTime[0] + " 07:00";
+                                    Date date1 = new Date(System.currentTimeMillis());
+                                    try {
+                                        date1 = simpleDateFormat.parse(notificationString);
+                                    } catch (ParseException ex) { }
+                                    if("07:00".compareTo(dateTime[1]) <= 0) {
+                                        date1 = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
+                                        notificationString = simpleDateFormat.format(date1);
+                                    }
+                                    Plan plan = new Plan(notificationString.split(" ")[0],
+                                            "07:00",
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            false,
+                                            0.0,
+                                            0.0);
+                                    ((NavigationDrawerMenu) getActivity()).timedAlert(taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            Database.username, date1.getTime()
+                                    );
+                                    user.plans.add(plan);
+                                }
+                                else if(i.tagName.equals("Sunset")){
+                                    Date date = new Date(System.currentTimeMillis());
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    String strDate = simpleDateFormat.format(date);
+                                    String[] dateTime = strDate.split(" ");
+                                    String notificationString = dateTime[0] + " 19:00";
+                                    Date date1 = new Date(System.currentTimeMillis());
+                                    try {
+                                        date1 = simpleDateFormat.parse(notificationString);
+                                    } catch (ParseException ex) { }
+                                    if("19:00".compareTo(dateTime[1]) <= 0) {
+                                        date1 = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
+                                        notificationString = simpleDateFormat.format(date1);
+                                    }
+                                    Plan plan = new Plan(notificationString.split(" ")[0],
+                                            "19:00",
+                                            taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            false,
+                                            0.0,
+                                            0.0);
+                                    ((NavigationDrawerMenu) getActivity()).timedAlert(taskViewModel.taskTitle.getValue(),
+                                            taskViewModel.taskDescription.getValue(),
+                                            Database.username, date1.getTime()
+                                    );
+                                    user.plans.add(plan);
+                                }
+                            }
 
                             user.tasks.add(task);
                             DocumentReference docRef1 = db.collection("users").document(Database.username);
