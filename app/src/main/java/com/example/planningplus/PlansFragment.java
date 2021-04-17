@@ -82,6 +82,7 @@ public class PlansFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Plans");
         //((NavigationDrawerMenu) requireActivity()).timedAlert("test title", "test description", Database.username, System.currentTimeMillis() + 100);
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());

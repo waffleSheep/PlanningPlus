@@ -82,6 +82,7 @@ public class PlanProximityFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Plans");
         NavController navController = Navigation.findNavController(view);
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
 

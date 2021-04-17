@@ -102,6 +102,7 @@ public class AskQuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingPanel.setVisibility(View.VISIBLE);
+                ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
                 JSONObject js = new JSONObject();
                 try {
                     js.put("document", Database.taskDesc);

@@ -90,6 +90,7 @@ public class AssignedTaskViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Assigned Tasks");
 
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());

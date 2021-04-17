@@ -97,6 +97,7 @@ public class TaskPaneTwo extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
 
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         recyclerView = view.findViewById(R.id.recyclerView);

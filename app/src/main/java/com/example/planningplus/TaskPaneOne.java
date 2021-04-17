@@ -84,7 +84,7 @@ public class TaskPaneOne extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
 
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);

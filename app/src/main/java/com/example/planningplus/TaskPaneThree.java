@@ -87,7 +87,7 @@ public class TaskPaneThree extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         NavController navController = Navigation.findNavController(view);
-
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
 
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("Select date");

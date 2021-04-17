@@ -77,6 +77,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Home");
         TextView username = view.findViewById(R.id.textView11);
         TextView taskCount = view.findViewById(R.id.textView12);
         TextView planCount = view.findViewById(R.id.textView13);

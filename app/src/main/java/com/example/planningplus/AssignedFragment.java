@@ -89,6 +89,7 @@ public class AssignedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Assigned Tasks");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         adapter = new AssignedRecyclerAdapter();

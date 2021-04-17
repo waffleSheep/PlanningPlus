@@ -86,6 +86,7 @@ public class TaskPaneFour extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         NavController navController = Navigation.findNavController(view);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Tasks");
 
         TextInputLayout textInputLayout = view.findViewById(R.id.outlinedTextField);
         textInputLayout.getEditText().setText(taskViewModel.days.getValue());

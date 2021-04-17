@@ -75,6 +75,7 @@ public class PlanPaneOneFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Plans");
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         NavController navController = Navigation.findNavController(view);
         Button next = view.findViewById(R.id.next);
