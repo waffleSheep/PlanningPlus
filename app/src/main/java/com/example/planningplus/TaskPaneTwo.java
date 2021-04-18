@@ -169,7 +169,7 @@ public class TaskPaneTwo extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                Snackbar.make(view, "Internet Error", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
             }
         }){
             @Override

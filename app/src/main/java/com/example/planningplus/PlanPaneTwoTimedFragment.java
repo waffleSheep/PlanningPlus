@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.firestore.DocumentReference;
@@ -155,6 +156,7 @@ public class PlanPaneTwoTimedFragment extends Fragment {
             public void onClick(View v) {
                 if(taskViewModel.planTimeDate.getValue().equals("") || taskViewModel.planTimeTime.getValue().equals("")){
                     Log.i("not work", "reason");
+                    Snackbar.make(view, "Areas not filled", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                     return;
                 }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -164,6 +166,7 @@ public class PlanPaneTwoTimedFragment extends Fragment {
                 }
                 catch (ParseException parseException){
                     Log.i("not work", "reason1");
+                    Snackbar.make(view, "Areas not filled", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                     return;
                 }
                 Long currTime = System.currentTimeMillis();
@@ -172,6 +175,7 @@ public class PlanPaneTwoTimedFragment extends Fragment {
                     Log.i("not work", "reason2");
                     Log.i("curr", currTime + "");
                     Log.i("curr", notificationTime + "");
+                    Snackbar.make(view, "The plan is before current time", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                     return;
                 }
 
