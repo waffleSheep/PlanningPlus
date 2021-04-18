@@ -114,7 +114,7 @@ public class AssignedFragment extends Fragment {
                 taskViewModel.tempOptions.setValue(new ArrayList<>());
                 taskViewModel.days.setValue("0");
                 taskViewModel.hours.setValue("0");
-                taskViewModel.taskDeadlineTime.setValue("");
+                taskViewModel.taskDeadlineDate.setValue("");
                 taskViewModel.taskDeadlineTime.setValue("");
 
                 for(Tag i : Database.userTagsData){
