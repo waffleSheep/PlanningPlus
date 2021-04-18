@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PlanPaneTwoProximityFragment#newInstance} factory method to
@@ -35,6 +36,7 @@ public class PlanPaneTwoProximityFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -126,7 +128,7 @@ public class PlanPaneTwoProximityFragment extends Fragment {
                                 taskViewModel.hasProximityAlert.getValue(),
                                 taskViewModel.planLatitude.getValue(),
                                 taskViewModel.planLongitude.getValue());
-                        user.plans.add(plan);
+                        user.plans.add(0, plan);
                         ((NavigationDrawerMenu) getActivity()).proximityAlert(taskViewModel.planLatitude.getValue(), taskViewModel.planLongitude.getValue(), taskViewModel.planTitle.getValue(), taskViewModel.planDescription.getValue(), Database.username);
                         documentReference.set(user);
                     }

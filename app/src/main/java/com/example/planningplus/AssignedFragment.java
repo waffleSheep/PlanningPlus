@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,20 +91,15 @@ public class AssignedFragment extends Fragment {
         NavController navController = Navigation.findNavController(view);
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
         ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Assigned Tasks");
+        ImageView background = view.findViewById(R.id.imageView6);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         adapter = new AssignedRecyclerAdapter();
+        recyclerView = view.findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
         DocumentReference documentReference = db.collection("users").document(Database.username);
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                recyclerView = view.findViewById(R.id.recyclerView);
-                layoutManager = new LinearLayoutManager(view.getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapter);
-            }
-        });
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +132,14 @@ public class AssignedFragment extends Fragment {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 User user = value.toObject(User.class);
                 adapter.setItems(user.assignedTasks);
+                if(adapter.getItemCount() == 0){
+                    background.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+                else{
+                    background.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

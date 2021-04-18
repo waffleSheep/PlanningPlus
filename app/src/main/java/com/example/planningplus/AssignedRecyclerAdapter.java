@@ -21,6 +21,12 @@ public class AssignedRecyclerAdapter extends RecyclerView.Adapter<AssignedRecycl
     String[] deadlines;
     Long[] ids;
 
+    public AssignedRecyclerAdapter(){
+        titles = new String[0];
+        deadlines = new String[0];
+        ids = new Long[0];
+    }
+
     /*
         public TaskRecyclerAdapter(ArrayList<Task> tasks){
             ArrayList<String> titlesTemp = new ArrayList<>();

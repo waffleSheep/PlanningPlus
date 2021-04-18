@@ -174,7 +174,7 @@ public class TaskPaneFour extends Fragment {
                                             taskViewModel.taskTitle.getValue(),
                                             taskViewModel.taskDescription.getValue(),
                                             user.username);
-                                    user.plans.add(plan);
+                                    user.plans.add(0, plan);
                                 }
                                 else if(i.tagName.equals("Work")){
                                     Plan plan = new Plan("",
@@ -189,7 +189,7 @@ public class TaskPaneFour extends Fragment {
                                             taskViewModel.taskTitle.getValue(),
                                             taskViewModel.taskDescription.getValue(),
                                             user.username);
-                                    user.plans.add(plan);
+                                    user.plans.add(0, plan);
                                 }
                                 else if(i.tagName.equals("Sunrise")) {
                                     Date date = new Date(System.currentTimeMillis());

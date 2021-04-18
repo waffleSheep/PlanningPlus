@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/tasksFragment">
     <fragment
         android:id="@+id/assignedFragment"
         android:name="com.example.planningplus.AssignedFragment"
@@ -292,11 +292,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.planningplus.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/planPaneTwoProximityFragment"
         android:name="com.example.planningplus.PlanPaneTwoProximityFragment"

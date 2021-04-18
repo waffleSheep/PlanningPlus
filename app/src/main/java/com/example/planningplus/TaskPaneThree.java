@@ -110,15 +110,14 @@ public class TaskPaneThree extends Fragment {
             }
         });
 
-        MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .build();
-
         TextView timeTextView = view.findViewById(R.id.time);
         timeTextView.setText("Time: " + taskViewModel.taskDeadlineTime.getValue());
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .build();
                 materialTimePicker.show(getFragmentManager(), "tag");
                 materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override

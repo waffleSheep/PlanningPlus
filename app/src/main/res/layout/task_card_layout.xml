@@ -34,6 +34,8 @@
                 android:id="@+id/task_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/corbel_light"
+                android:textColor="#000000"
                 android:textSize="30sp" />
 
             <TextView
@@ -41,6 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:textSize="18sp"
+                android:fontFamily="@font/corbel_light"
+                android:textColor="#000000"
                 android:layout_weight="1" />
         </LinearLayout>
 

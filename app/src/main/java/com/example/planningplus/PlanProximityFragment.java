@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
@@ -85,6 +86,7 @@ public class PlanProximityFragment extends Fragment {
         ((NavigationDrawerMenu) getActivity()).getSupportActionBar().setTitle("Plans");
         NavController navController = Navigation.findNavController(view);
         TaskViewModel taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+        ImageView background = view.findViewById(R.id.imageView3);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());
@@ -114,6 +116,14 @@ public class PlanProximityFragment extends Fragment {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 User user = value.toObject(User.class);
                 adapter.setItems(user.plans);
+                if(adapter.getItemCount() == 0){
+                    background.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+                else{
+                    background.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

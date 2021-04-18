@@ -22,6 +22,8 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/corbel_light"
+                android:textColor="#000000"
                 android:paddingTop="5dp"
                 android:text="Plan Deadline"
                 android:textAlignment="center"
@@ -30,6 +32,8 @@
             <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/corbel_light"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text="Date:"
                 android:textSize="30sp" />
@@ -37,6 +41,8 @@
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/corbel_light"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text="Time:"
                 android:textSize="30sp" />

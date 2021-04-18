@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -101,6 +102,7 @@ public class PlanTimedFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TimedPlansRecyclerAdapter();
         recyclerView.setAdapter(adapter);
+        ImageView background = view.findViewById(R.id.imageView7);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("users").document(Database.username);
@@ -129,6 +131,14 @@ public class PlanTimedFragment extends Fragment {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             User user = documentSnapshot.toObject(User.class);
                             adapter.setItems(user.plans, currentSelectedDate);
+                            if(adapter.getItemCount() == 0){
+                                background.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            else{
+                                background.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
                 }
@@ -156,6 +166,18 @@ public class PlanTimedFragment extends Fragment {
                 User user = value.toObject(User.class);
                 if(currentSelectedDate != null){
                     adapter.setItems(user.plans, currentSelectedDate);
+                    if(adapter.getItemCount() == 0){
+                        background.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
+                    else{
+                        background.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                }
+                else{
+                    background.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
             }
         });

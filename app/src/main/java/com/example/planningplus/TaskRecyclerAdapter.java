@@ -34,6 +34,13 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     Long[] ids;
     Integer[] colours;
 
+    public TaskRecyclerAdapter(){
+        titles = new String[0];
+        deadlines = new String[0];
+        ids = new Long[0];
+        colours = new Integer[0];
+    }
+
 /*
     public TaskRecyclerAdapter(ArrayList<Task> tasks){
         ArrayList<String> titlesTemp = new ArrayList<>();
@@ -125,33 +132,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
                     Database.id = ids[getAdapterPosition()];
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_tasksFragment_to_taskViewFragment);
-                }
-            });
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Long id = ids[getAdapterPosition()];
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    DocumentReference documentReference = db.collection("users").document(Database.username);
-                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            User user = documentSnapshot.toObject(User.class);
-                            for(int i = 0; i < user.tasks.size(); ++i){
-                                if(user.tasks.get(i).id.equals(id)){
-                                    if(user.tasks.get(i).isAssigned){
-
-                                        return;
-                                    }
-                                    user.tasks.remove(i);
-                                    break;
-                                }
-                            }
-                            documentReference.set(user);
-                        }
-                    });
-                    return false;
                 }
             });
         }
